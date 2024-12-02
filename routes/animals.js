@@ -14,4 +14,16 @@ router.get("/",
         // res.json({"message":"Animals router"})
 })
 
+router.post("/", 
+    async function(req, res, next){
+        console.log("Post Body", req.body)
+        try{
+            res.json(await animals.create(req.body))
+        }
+        catch(err){
+            next(err)
+        }
+
+})
+
 module.exports=router
