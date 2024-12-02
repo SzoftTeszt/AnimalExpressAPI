@@ -37,6 +37,17 @@ router.put("/:id",
         }
 
 })
+router.patch("/:id", 
+    async function(req, res, next){
+        console.log("Patch Body", req.body)
+        try{
+            res.json(await animals.patch(req.params.id,req.body))
+        }
+        catch(err){
+            next(err)
+        }
+
+})
 router.delete("/:id", 
     async function(req, res, next){
         console.log("Post Body", req.body)

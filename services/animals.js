@@ -39,6 +39,25 @@ async function update(id,animal){
         message="Animal updated successfully"
     return {message}
 }
+async function patch(id,animal){
+    let fields= Object.keys(animal).map(
+        (field)=> field+"=?"
+    ).join(", ")
+
+    let updateValues=Object.values(animal)
+    updateValues.push(id)
+    console.log("Fields:", fields)
+    console.log("updateValues:", updateValues)
+
+    const result= await db.query(`
+    update animal set ${fields} where Id=?`,
+    updateValues)   
+
+    let message ="Error in updating animal"
+    if (result.affectedRows)
+        message="Animal updated successfully"
+    return {message}
+}
 
 async function remove(id){
     const result= await db.query(`
@@ -55,5 +74,6 @@ module.exports={
     getDatas,
     create,
     update,
-    remove
+    remove,
+    patch
 }
