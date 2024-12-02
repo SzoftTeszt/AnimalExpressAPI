@@ -23,14 +23,37 @@ async function create(animal){
     let message ="Error in creating animal"
 
     if (result.affectedRows)
-        message="Animal created succesfully"
+        message="Animal created successfully"
 
     return {message}
 
 } 
 
+async function update(id,animal){
+    const result= await db.query(`
+    update animal set Name=?, Species=?, Price=? where Id=?`,
+    [animal.Name, animal.Species, animal.Price, id])
+
+    let message ="Error in updating animal"
+    if (result.affectedRows)
+        message="Animal updated successfully"
+    return {message}
+}
+
+async function remove(id){
+    const result= await db.query(`
+    delete from animal where Id=?`,
+    [id])
+
+    let message ="Error in deleting animal"
+    if (result.affectedRows)
+        message="Animal deleted successfully"
+    return {message}
+}
 
 module.exports={
     getDatas,
-    create
+    create,
+    update,
+    remove
 }
